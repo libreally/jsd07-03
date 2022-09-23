@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--action 设置提交地址-->
+<form action="http://www.tedu.com">
+    <table border="1" align="center">
+        <tr>
+            <!--readonly：只读 value：设置默认值  maxlength:最大字符长-->
+            <td>用户名:</td>
+            <td><input type="text" name="username" placeholder="用户名" maxlength="5"  ></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input type="password" name="password" placeholder="密码"></td>
+        </tr>
+        <tr>
+            <!--value属性必须选择 checked：默认选中  label:点击字生效-->
+            <td>性别:</td>
+            <td><input type="radio" name="gender" value="man" checked id="1"><label for="1">男</label>
+                <input type="radio" name="gender" value="woman" id="2"><label for="2">女</label>
+            </td>
+        </tr>
+        <tr>
+            <td>爱好:</td>
+            <td><input type="checkbox" name="hobby" value="打游戏" checked>打游戏
+                <input type="checkbox" name="hobby" value="学习">学习
+                <input type="checkbox" name="hobby" value="篮球">篮球
+            </td>
+        </tr>
+        <tr>
+            <td>生日:</td>
+            <td><input type="date" name="birthday"></td>
+        </tr>
+        <tr>
+            <td>地区:</td>
+            <td>
+                <select name="area">
+                    <option value="default" selected>请选择</option>
+                    <option value="bj">北京</option>
+                    <option value="sh">上海</option>
+                    <option value="sz">深圳</option>
+                    <option value="gz">广州</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>自我简介:</td>
+            <td>
+                <label>
+                    <textarea rows="10" cols="30">（请输入内容）</textarea>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>简历:</td>
+            <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="注册">
+                <input type="reset" value="重置">
+                <input type="button" value="自定义按钮">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit">注册2</button>
+                <button type="reset">重置2</button>
+                <button type="button">自定义按钮</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

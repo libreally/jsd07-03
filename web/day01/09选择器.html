@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    /*id 选择器 通过#引用*/
+    #p1{
+      color: aqua;
+    }
+    /*类选择器 通过.*/
+    .c1{
+      color: orange;
+    }
+    /*分组选择器*/
+    a,#p1,.c1{
+      background-color: chocolate;
+    }
+    /*属性选择器*/
+   input[type='text']{color: red;}
+   input[type='password']{background-color: darkgoldenrod;}
+   /*任意元素选择器*/
+    *{
+        /*边框 ：出息 边框样式 颜色*/
+        border: 1px solid cyan;
+    }
+  </style>
+</head>
+<body>
+<input type="text">
+<input type="password">
+<h1>选择器</h1>
+<a href="07form表单.html">链接</a>
+<p id="p1">苹果</p>
+<p >香蕉</p>
+<p class="c1">橘子</p>
+<hr>
+
+<div>电视</div>
+<div>冰箱</div>
+<div class="c1">洗衣机</div>
+</body>
+</html>
