@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #d1{
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            /*值越大则在上一级*/
+            z-index: 3;
+        }
+        #d2{
+            width: 100px;
+            height: 200px;
+            background-color: blue;
+            position: absolute;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+<div id="d1"></div>
+<div id="d2"></div>
+</body>
+</html>
