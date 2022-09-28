@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+  {{info}}
+    <ul>
+        <li v-for="name in arr">{{name}}</li>
+    </ul>
+    <table border="1">
+        <caption>人物列表</caption>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+        </tr>
+        <tr v-for="(p,i) in persons">
+            <td>{{i}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.age}}</td>
+            <td>{{p.gender}}</td>
+        </tr>
+    </table>
+</div>
+<script src="js/vue.min.js"></script>
+<script>
+  let v=new Vue({
+    el:"body>div",
+    data:{
+      info:"循环遍历",
+        arr:["刘能","赵四","谢广坤","七哥"],
+        persons:[{name:"张三",age:12,gender:"男"},
+            {name:"李四",age:14,gender:"女"},
+            {name:"王五",age:15,gender:"男"}]
+    }
+  })
+</script>
+</body>
+</html>
