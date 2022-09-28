@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <caption>用户</caption>
+  <tr>
+    <th>姓名</th>
+    <th>密码</th>
+    <th>昵称</th>
+  </tr>
+</table>
+
+<script>
+    let arr=[{name:"张三",password:"123",nickname:"三儿"},
+      {name:"李四",password:"123",nickname:"四儿"},
+      {name:"王五",password:"123",nickname:"五儿"}];
+    for (let person of arr) {
+      let tr=document.createElement("tr");
+      let nameTd = document.createElement("td")
+      let passwordTd = document.createElement("td")
+      let nicknameTd = document.createElement("td")
+      let table = document.querySelector("table");
+      nameTd.innerText=person.name;
+      passwordTd.innerText=person.password;
+      nicknameTd.innerText=person.nickname;
+      tr.append(nameTd,passwordTd,nicknameTd);
+      table.append(tr);
+    }
+</script>
+</body>
+</html>

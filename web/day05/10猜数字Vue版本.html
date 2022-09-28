@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" placeholder="输入1-100之间的整数" v-model="num">
+<input type="button" value="猜一猜" v-on:click="f()">
+<h1>{{info}}</h1>
+<script src="js/vue.min.js"></script>
+<script>
+    let x = parseInt(Math.random() * 100 + 1);
+    let v = new Vue({
+        el: "body>input",
+        data: {
+            info: "",
+            num: "",
+        },
+        methods: {
+            f() {
+                if (v.num > x) {
+                    v.info = "大了";
+                } else if (v.num < x) {
+                    v.info = "小了";
+                } else {
+                    v.info = "猜对了";
+                }
+            }
+        }
+    })
+</script>
+</body>
+
+</html>

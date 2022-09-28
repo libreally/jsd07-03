@@ -13,17 +13,11 @@
     function f(x){
         let i=document.querySelector("input");
         for (let j = 0; j < i.value; j++) {
-            if (x===1){
-                let url="a.jpg";
+                let url=x==1?"a.jpg":"b.jpg";
                 let img=document.createElement("img");
                 img.src=url;
                 document.body.append(img);
-            }else {
-                let url="b.jpg";
-                let img=document.createElement("img");
-                img.src=url;
-                document.body.append(img);
-            }
+
         }
     }
 </script>
