@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <title></title>
+    <style>
+        .index{
+            background: #c8cfd8;
+            width: 80%;
+            text-align: center;
+            margin-left: 142px;
+            width: 80.6%;
+
+        }
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 200px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <template>
+        <div class="index">
+            <!-- 跑马灯  -->
+            <div>
+                <el-carousel :interval="4000" type="card" height="200px">
+                    <el-carousel-item v-for="item in imgList" :key="item.id">
+                        <img :src="item.idView" class="image">
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+        </div>
+    </template>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v=new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                imgList: [
+                    {id:0,idView:"../eui/OIP-C (2).jpg"},
+                    {id:1,idView:"../eui/OIP-C (3).jpg"},
+                    {id:2,idView:"../eui/OIP-C (4).jpg"},
+                    {id:3,idView:"../eui/OIP-C.jpg"},
+                    {id:4,idView:"../eui/OIP-C (1).jpg"},
+                ]
+            }
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>
