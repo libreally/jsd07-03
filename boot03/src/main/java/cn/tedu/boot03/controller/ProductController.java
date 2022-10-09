@@ -68,7 +68,7 @@ public class ProductController {
     @RequestMapping("/update")
     public String update(Product product) {
         mapper.update(product);
-        return "添加完成<a href='/select'>返回列表</a>";
+        return "修改完成<a href='/select'>返回列表</a>";
     }
 
 }
