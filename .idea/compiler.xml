@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="boot011" />
         <module name="jsd07-03" />
+        <module name="boot03" />
         <module name="boot02" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="boot01" options="-parameters" />
+      <module name="boot03" options="-parameters" />
       <module name="demo" options="-parameters" />
     </option>
   </component>
