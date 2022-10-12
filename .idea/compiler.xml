@@ -17,6 +17,7 @@
     <bytecodeTargetLevel>
       <module name="boot01" target="1.8" />
       <module name="boot0701" target="1.8" />
+      <module name="boot0801" target="1.8" />
       <module name="demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -27,6 +28,7 @@
       <module name="boot07" options="-parameters" />
       <module name="boot0701" options="-parameters" />
       <module name="boot08" options="-parameters" />
+      <module name="boot0801" options="-parameters" />
       <module name="demo" options="-parameters" />
     </option>
   </component>

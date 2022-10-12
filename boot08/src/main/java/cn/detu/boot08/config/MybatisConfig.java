@@ -7,5 +7,4 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("cn.tedu.boot08.mapper")
 public class MybatisConfig {
 
-
 }
