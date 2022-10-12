@@ -36,4 +36,9 @@ public class UploadController {
         //把图片的url路径响应给客户端      /文件名
         return "/"+filename;
     }
+    @RequestMapping("/remove")
+    public void remove(String url){
+        //删除磁盘上的文件
+        new File("d:/files"+url).delete();
+    }
 }

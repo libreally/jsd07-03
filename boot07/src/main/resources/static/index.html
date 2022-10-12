@@ -12,7 +12,9 @@
     <h2>微博列表</h2>
     <div v-for="weibo in arr">
         <h3>{{weibo.content}}</h3>
+        <p>{{weibo.created}}</p>
         <img :src="weibo.url"  width="100px" alt="">
+        <button><a href="javascript:void(0)" @click="del(weibo.id)">删除</a></button>
     </div>
 </div>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -27,7 +29,14 @@
             }
         },
        methods:{
+            del(id){
+                if (confirm("确认删除?")){
+                    axios.get("/delete?id="+id).then(function (response) {
+                        location.reload();
+                    })
+                }
 
+            }
        },
        created:function (){
             axios.get("/select").then(function (response) {

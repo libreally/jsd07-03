@@ -51,6 +51,14 @@
        methods:{
            handleRemove(file, fileList) {
                console.log(file, fileList);
+               //当删除页面中的图片时触发的方法
+               //发请求删除服务器中的的图片
+               //file代表当前删除的图片文件
+               //file.response代表上传改文件成功时服务器响应的内容(当前删除图片路径)
+               axios.get("/remove?url="+file.response).then(function () {
+                   console.log("删除服务器图片完成");
+
+               })
            },
            handlePictureCardPreview(file) {
                this.dialogImageUrl = file.weibo.url;

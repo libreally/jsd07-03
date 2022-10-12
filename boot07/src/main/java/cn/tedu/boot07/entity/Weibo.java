@@ -1,11 +1,18 @@
 package cn.tedu.boot07.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Weibo {
     private Integer id;
     private String content;
     private String url;
+    //日期格式 yyyy-MM-dd HH:mm:ss
+    //日期格式 yyyy/MM/dd HH:mm:ss
+    //日期格式 yyyy年MM月dd HH:mm:ss
+    //时区 timezone = "GMT+8"
+    @JsonFormat(pattern = "yyyy年MM月dd HH:mm:ss",timezone = "GMT+8")
     private Date created;//日期
 
     public Weibo() {
