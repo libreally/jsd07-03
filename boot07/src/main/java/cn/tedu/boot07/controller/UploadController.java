@@ -33,9 +33,7 @@ public class UploadController {
         //将图片保存到filePath路径中
         pic.transferTo(new File(filePath));
 
-
-        //把图片的url路径响应给客户端
+        //把图片的url路径响应给客户端      /文件名
         return "/"+filename;
-
     }
 }

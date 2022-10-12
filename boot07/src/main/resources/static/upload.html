@@ -11,6 +11,7 @@
     name设置上传参数名称
     limit设置上传数量
     -->
+    <input type="text" placeholder="说点什么" v-model="weibo.content">
 
     <el-upload
             action="/upload"
@@ -26,9 +27,10 @@
         <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
     <hr>
-    <img :src="url" alt="">
+    <input type="button" value="发布" @click="insert()">
 </div>
 </body>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <!-- import Vue before Element -->
 <script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
 <!-- import JavaScript -->
@@ -40,7 +42,10 @@
             return {
                 dialogImageUrl: '',
                 dialogVisible: false,
-                url:""
+                weibo:{
+                    content:"",
+                    url:""
+                }
             }
         },
        methods:{
@@ -48,14 +53,24 @@
                console.log(file, fileList);
            },
            handlePictureCardPreview(file) {
-               this.dialogImageUrl = file.url;
+               this.dialogImageUrl = file.weibo.url;
                this.dialogVisible = true;
            },
            handleSuccess(response,file,fileList){
                //response代表服务器上传成功时响应的数据
                //file代表上传成功的文件
                //fileList代表上传成功的所有文件
-               v.url=response;
+               v.weibo.url=response;
+           },
+           insert(){
+               if (v.weibo.url===""){
+                   alert("请选择上传的图片!");
+                   return;
+               }
+               axios.post("/insert",v.weibo).then(function (response) {
+                   alert("发布完成");
+                   location.href="/";
+               })
            }
        }
     })
