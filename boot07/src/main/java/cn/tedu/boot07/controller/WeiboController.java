@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class WeiboController {
@@ -26,4 +27,9 @@ public class WeiboController {
         );*/
         mapper.insert(weibo);
     }
+    @RequestMapping("/select")
+    public List<Weibo> select(){
+        return mapper.select();
+    }
+
 }
