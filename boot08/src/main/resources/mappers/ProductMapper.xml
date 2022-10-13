@@ -68,7 +68,7 @@
         INSERT INTO product
         VALUES
         <foreach collection="list" item="p" separator=",">
-            (null,#{title},#{price},#{num})
+            (null,#{p.title},#{p.price},#{p.num})
         </foreach>
     </insert>
     <!--动态插入数据-->

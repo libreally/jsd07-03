@@ -1,6 +1,8 @@
 package cn.tedu.boot08;
 
+import cn.tedu.boot08.entity.MyProduct;
 import cn.tedu.boot08.entity.Product;
+import cn.tedu.boot08.mapper.MyProductMapper;
 import cn.tedu.boot08.mapper.ProductMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ class Boot08ApplicationTests {
 
     @Autowired
     ProductMapper mapper;
+    @Autowired
+    MyProductMapper myMapper;
     @Test
     void contextLoads() {
         Product p = new Product();
@@ -48,14 +52,13 @@ class Boot08ApplicationTests {
 
     @Test
     void t5(){
-//        ArrayList<Integer> list = new ArrayList<>();
-//        list.add(5);
-//        list.add(6);
-//        System.out.println(mapper.deleteByIds1(list));
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(6);
+        System.out.println(mapper.deleteByIds1(list));
+        Integer[] ids = {7,8};
+        System.out.println(mapper.deleteByIds2(ids));
 
-
-//        Integer[] ids = {7,8};
-//        System.out.println(mapper.deleteByIds2(ids));
         System.out.println(mapper.deleteByIds3(9,10));
     }
     @Test
@@ -81,5 +84,21 @@ class Boot08ApplicationTests {
         p.setId(4);
         p.setPrice(100.00);
         mapper.dynamicUpdate(p);
+    }
+    @Test
+    void t9(){
+        MyProduct myProduct = new MyProduct();
+        myProduct.setTitle("coffee");
+        myProduct.setSaleCount(100);
+        myProduct.setViewCount(13);
+        myMapper.insert(myProduct);
+    }
+    @Test
+    void t10(){
+        System.out.println(myMapper.selectById(1));
+    }
+    @Test
+    void t11(){
+        System.out.println(myMapper.select());
     }
 }
