@@ -1,4 +1,4 @@
-package cn.detu.boot08.entity;
+package cn.tedu.boot08.entity;
 
 public class Product {
     private Integer id;

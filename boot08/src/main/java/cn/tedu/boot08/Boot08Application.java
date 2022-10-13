@@ -1,4 +1,4 @@
-package cn.detu.boot08;
+package cn.tedu.boot08;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
