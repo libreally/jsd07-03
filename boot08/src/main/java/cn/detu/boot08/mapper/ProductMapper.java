@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductMapper {
 
     void insert(Product product);
+
+    void deleteById(int id);
 }
