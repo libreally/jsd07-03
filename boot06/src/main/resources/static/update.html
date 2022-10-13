@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改商品</title>
+</head>
+<body>
+<h1>修改商品</h1>
+<div>
+    <input type="text" v-model="product.id">
+    <input type="text" v-model="product.title">
+    <input type="text" v-model="product.price">
+    <input type="text" v-model="product.num">
+    <input type="button" value="修改" @click="update()">
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: function () {
+            return {
+                product:{
+                    id:"",
+                    title:"",
+                    price:"",
+                    num:"",
+                }
+            }
+        },
+        methods: {
+            update(){
+                axios.post("/update",v.product).then(function (response) {
+                    alert("修改完成！")
+                    location.href="/list.html";
+                })
+
+            }
+        },
+        created:function (){
+            //location.search修改时传递来的id
+            axios.get("/selectById"+location.search).then(function (response) {
+                v.product=response.data;
+            })
+        }
+    })
+</script>
+
+</body>
+</html>
