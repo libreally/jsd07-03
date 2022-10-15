@@ -13,7 +13,7 @@
     <resultMap id="playerRM" type="cn.tedu.boot10.pojo.vo.PlayerVO">
         <id column="pid" property="id"/>
         <result column="pname" property="name"/>
-        <!--关联一个类型时用此标签-->
+        <!--关联一个类型时用此标签 一对多-->
         <association property="team" javaType="cn.tedu.boot10.pojo.entity.Team">
             <id column="tid" property="id"/>
             <result column="tname" property="name"/>

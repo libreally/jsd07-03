@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<h1>微博首页</h1>
+<div>
+    <div v-if="user.nickname!=null">
+        <h2>欢迎{{user.nickname}}回来</h2>
+        <a href="/send.html">发布微博</a>
+        <a href="javascript:void(0)" @click="logout()">退出登陆</a>
+    </div>
+    <div v-else>
+        <a href="/reg.html">注册</a>
+        <a href="/login.html">登陆</a>
+    </div>
+    <hr>
+    <div v-for="weibo in arr">
+        <h3>
+            <a :href="'/detail.html?id='+weibo.id">{{weibo.nickname}}说：{{weibo.content}}</a>
+            <span>{{weibo.created}}</span>
+        </h3>
+    </div>
+
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: function () {
+            return {
+                user:{},
+                arr:[]
+            }
+        },
+        methods: {
+            logout(){
+                if (confirm("确认退出？")){
+                    axios.get("/logout").then(function (response) {
+                        // 修改user值页面改变
+                        v.user={};
+                    })
+                }
+
+            }
+        },
+        created:function (){
+            //获取当前登陆对象
+            axios.get("/currentUser").then(function (response) {
+                v.user=response.data;
+            })
+            //展示所有微博信息
+            axios.get("/weibo/select").then(function (response) {
+                v.arr=response.data;
+            })
+        }
+    })
+</script>
+</body>
+</html>

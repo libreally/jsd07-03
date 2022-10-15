@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.weibo.mapper.UserMapper">
+    <!--void insert(UserDTO userDTO);-->
+    <insert id="insert">
+        INSERT INTO weibo.user
+        VALUES (null,#{username},#{password},#{nickname})
+    </insert>
+    <!--UserVO selectByUsername(String username);-->
+    <select id="selectByUsername" resultType="cn.tedu.weibo.pojo.vo.UserVO">
+        SELECT id,password,nickname
+        FROM weibo.user
+        WHERE username=#{username}
+    </select>
+</mapper>

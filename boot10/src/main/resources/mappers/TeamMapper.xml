@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.boot10.mapper.TeamMapper">
+    <select id="selectById" resultMap="TeamRM">
+        SELECT t.id tid,t.name tname,loc,p.id pid,p.name pname
+        FROM team t join player p
+            ON t.id = p.team_id
+        WHERE t.id=#{id}
+    </select>
+    <resultMap id="TeamRM" type="cn.tedu.boot10.pojo.vo.TeamVO">
+        <id column="tid" property="id"/>
+        <result column="tname" property="name"/>
+        <result column="loc" property="loc"/>
+        <collection property="playerList" ofType="cn.tedu.boot10.pojo.entity.Player">
+            <id column="pid" property="id"/>
+            <result column="pname" property="name"/>
+        </collection>
+    </resultMap>
+</mapper>

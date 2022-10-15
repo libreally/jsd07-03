@@ -14,9 +14,11 @@
         <module name="boot08" />
         <module name="boot07" />
         <module name="boot06" />
+        <module name="weibo" />
         <module name="boot10" />
         <module name="boot05" />
         <module name="boot04" />
+        <module name="weibo01" />
         <module name="boot03" />
         <module name="boot02" />
       </profile>
@@ -43,6 +45,8 @@
       <module name="boot09" options="-parameters" />
       <module name="boot10" options="-parameters" />
       <module name="demo" options="-parameters" />
+      <module name="weibo" options="-parameters" />
+      <module name="weibo01" options="-parameters" />
     </option>
   </component>
 </project>
