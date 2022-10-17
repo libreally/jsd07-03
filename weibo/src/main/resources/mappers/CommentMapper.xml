@@ -8,4 +8,16 @@
        INSERT INTO weibo.comment
        VALUES (null,#{content},#{weiboId},#{userId})
    </insert>
+    <!--List<Comment> select();-->
+    <select id="selectByWeiboId" resultMap="CommentRM">
+        SELECT c.id cid,nickname,content
+            FROM weibo.comment c JOIN weibo.user u
+                ON u.id = c.user_id
+                    WHERE c.weibo_id=#{id}
+    </select>
+    <resultMap id="CommentRM" type="cn.tedu.weibo.pojo.vo.CommentVO">
+        <id column="cid" property="id"/>
+        <result column="content" property="content"/>
+        <result column="nickname" property="nickname"/>
+    </resultMap>
 </mapper>

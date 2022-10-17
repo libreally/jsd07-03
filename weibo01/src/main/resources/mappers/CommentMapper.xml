@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.weibo01.mapper.CommentMapper">
+    <insert id="insert">
+        INSERT INTO weibo.comment
+        VALUES (NULL, #{content}, #{weiboId}, #{userId})
+    </insert>
+
+    <select id="selectById" resultType="cn.tedu.weibo01.pojo.vo.CommentListVO">
+        SELECT content,weibo_id weiboId,user_id userId
+        FROM weibo.comment
+        WHERE weibo_id=#{id}
+    </select>
+</mapper>

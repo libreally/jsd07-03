@@ -1,10 +1,10 @@
-package cn.tedu.weibo.controller;
+package cn.tedu.weibo01.controller;
 
-import cn.tedu.weibo.mapper.CommentMapper;
-import cn.tedu.weibo.pojo.dto.CommentDTO;
-import cn.tedu.weibo.pojo.entity.Comment;
-import cn.tedu.weibo.pojo.vo.CommentVO;
-import cn.tedu.weibo.pojo.vo.UserVO;
+import cn.tedu.weibo01.mapper.CommentMapper;
+import cn.tedu.weibo01.pojo.dto.CommentDTO;
+import cn.tedu.weibo01.pojo.entity.Comment;
+import cn.tedu.weibo01.pojo.vo.CommentListVO;
+import cn.tedu.weibo01.pojo.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,23 +18,22 @@ import java.util.List;
 public class CommentController {
     @Autowired
     CommentMapper mapper;
+
     @RequestMapping("/comment/insert")
-    public int insert(@RequestBody CommentDTO comment, HttpSession session){
+    public int insert(@RequestBody CommentDTO comment, HttpSession session,Integer id){
         UserVO user = (UserVO) session.getAttribute("user");
-        if (user==null){
+        if (user==null) {
             return 2;
         }
-        System.out.println("comment = " + comment);
         Comment c = new Comment();
         BeanUtils.copyProperties(comment,c);
-        //设置用户id
         c.setUserId(user.getId());
-        System.out.println("c" + c);
+        c.setWeiboId(id);
         mapper.insert(c);
         return 1;
     }
-    @RequestMapping("/comment/selectByWeiboId")
-    public List<CommentVO> selectByWeiboId(int id){
-        return mapper.selectByWeiboId(id);
+    @RequestMapping("/comment/selectById")
+    public List<CommentListVO> selectById(int id){
+        return mapper.selectById(id);
     }
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <title>发布微博</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" placeholder="说点什么" v-model="weibo.content">
+    <el-upload
+            action="/upload"
+            name="pic"
+            limit="1"
+            list-type="picture-card"
+            :on-success="handleSuccess"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove">
+        <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
+    <br>
+    <input type="button" value="发布" @click="send()">
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "#app",
+        data: function () {
+            return {
+                dialogImageUrl: '',
+                dialogVisible: false,
+                weibo:{
+                    content:"",
+                    url:""
+                }
+            }
+        },
+        methods: {
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                axios.get("/remove?url="+file.response).then(function () {
+                    console.log("删除服务器图片完成");
+
+                })
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.weibo.url;
+                this.dialogVisible = true;
+            },
+            handleSuccess(response,file,fileList){
+                v.weibo.url=response;
+            },
+            send(){
+                if (v.weibo.url===""){
+                    alert("请选择上传的图片!");
+                    return;
+                }
+                axios.post("/weibo/insert",v.weibo).then(function (response) {
+                    if (response.data===1){
+                        alert("发布完成");
+                        location.href="/";
+                    }else {
+                        alert("请先登录");
+                        location.href="/login.html";
+                    }
+
+                })
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
