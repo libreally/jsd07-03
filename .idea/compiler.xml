@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="boot011" />
+        <module name="coolshark" />
         <module name="jsd07-03" />
         <module name="boot06_02" />
         <module name="boot09" />
@@ -44,6 +45,7 @@
       <module name="boot08" options="-parameters" />
       <module name="boot09" options="-parameters" />
       <module name="boot10" options="-parameters" />
+      <module name="coolshark" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="weibo" options="-parameters" />
       <module name="weibo01" options="-parameters" />
