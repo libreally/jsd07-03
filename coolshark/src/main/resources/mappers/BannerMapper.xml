@@ -12,4 +12,19 @@
         DELETE FROM cs.banner
         WHERE id=#{id}
     </delete>
+    <!--void insert(String url);-->
+    <insert id="insert">
+        INSERT INTO cs.banner
+        VALUES (NULL,#{url})
+    </insert>
+    <!--void update(Banner banner);-->
+    <update id="update">
+        UPDATE cs.banner
+        SET url=#{url}
+        WHERE id=#{id}
+    </update>
+    <!--String selectUrlById(int id);-->
+    <select id="selectUrlById" resultType="String">
+        SELECT url FROM cs.banner WHERE id=#{id}
+    </select>
 </mapper>

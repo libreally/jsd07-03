@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <style>
+        .el-page-header__content {
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-page-header style="background-color: #0095d7;
+            color: white;line-height: 60px" @back="goBack" content="修改轮播图">
+    </el-page-header>
+    <img :src="oldUrl" v-if="url==''" width="200" alt="">
+    <el-upload
+            action="/upload"
+            name="pic"
+            limit="1"
+            list-type="picture-card"
+            :on-success="handleSuccess"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove">
+        <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="">
+    </el-dialog>
+    <el-button type="success" @click="update()">修改轮播图</el-button>
+</div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                dialogImageUrl: '',
+                dialogVisible: false,
+                url: "",
+                oldUrl: "",
+                isShow:true
+            }
+        },
+        methods: {
+            update() {
+                if (v.url == "") {
+                    v.$message.error("请选择上传的图片!");
+                    return;
+                }
+
+                //从地址栏中得到轮播图的id
+                let bannerId = location.search.split("&")[1].split("=")[1];
+                //创建保存轮播图信息的对象
+                let b = {id:bannerId,url:v.url};
+                //发出修改轮播图的请求
+                axios.post("/banner/update",b).then(function () {
+                    location.href="/admin.html";
+                })
+
+            },
+            handleSuccess(response, file, fileList) {
+                //response代表服务器响应的图片路径
+                v.url = response;
+                v.isShow = false;
+            },
+            goBack() {
+                history.back();//返回上一页面
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+                //发出删除图片的请求
+                axios.get("/remove?url=" + v.url).then(function () {
+                    v.$message("服务器图片删除完成");
+                    v.url = "";
+                })
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            }
+        },
+        created: function () {
+            //created方法是Vue对象初始化过程中的方法,并没有初始化完成,
+            // 此时如果需要访问Vue对象中的属性,可以通过this取代v
+            //axios请求后为什么可以使用v? 因为发请求是使用的子线程,
+            //请求完成后created方法早就执行完Vue对象初始化过程也早就完成
+            //所以可以访问v变量
+            //得到地址栏中从上个页面传递过来的图片路径
+            // ?url=xxx.jpg&id=5
+            // ?url=xxx.jpg
+            this.oldUrl = location.search.split("&")[0].split("=")[1];
+
+        }
+    })
+</script>
+</html>

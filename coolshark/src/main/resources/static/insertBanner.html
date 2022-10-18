@@ -31,6 +31,7 @@
     <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
     </el-dialog>
+    <el-button type="success" @click="insert()">添加轮播图</el-button>
 </div>
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -51,10 +52,20 @@
                 //返回上级页面
                 history.back();
             },
+            insert(){
+              if (v.url===""){
+                  v.$message.error("请选择上传图片");
+                  return;
+              }
+              axios.get("/banner/insert?url="+v.url).then(function (response) {
+                  location.href="/admin.html"
+              })
+            },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
                 axios.get("/remove?url="+v.url).then(function () {
                         v.$message("删除服务器图片完成");
+                        v.url="";
                 })
             },
             handlePictureCardPreview(file) {
