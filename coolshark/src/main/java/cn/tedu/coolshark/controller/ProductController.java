@@ -4,14 +4,14 @@ import cn.tedu.coolshark.mapper.ProductMapper;
 import cn.tedu.coolshark.pojo.dto.ProductDTO;
 import cn.tedu.coolshark.pojo.dto.ProductUpdateDTO;
 import cn.tedu.coolshark.pojo.entity.Product;
-import cn.tedu.coolshark.pojo.vo.ProductAdminVO;
-import cn.tedu.coolshark.pojo.vo.ProductUpdateVO;
+import cn.tedu.coolshark.pojo.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +49,25 @@ public class ProductController {
     @RequestMapping("/product/update")
     public void update(@RequestBody ProductUpdateDTO product){
         System.out.println("product = " + product);
-
         mapper.update(product);
+    }
+    @RequestMapping("/product/select/top")
+    public List<ProductTopVO> selectTop(){
+        return mapper.selectTop();
+    }
+    @RequestMapping("/product/select/index")
+    public List<ProductIndexVO> selectIndex(){
+        return mapper.selectIndex();
+    }
+    @RequestMapping("/product/selectById/detail")
+    public ProductDetailVO selectByIdDetail(int id, HttpSession session){
+        String info = (String) session.getAttribute("view" + id);
+        if (info==null){
+            //浏览量增加
+            mapper.updateViewCount(id);
+            session.setAttribute("view"+id,"isVisited");
+        }
+
+        return mapper.selectByIdDetail(id);
     }
 }

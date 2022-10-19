@@ -39,6 +39,52 @@
             sale_count=#{saleCount},num=#{num},category_id=#{categoryId}
         WHERE id=#{id}
     </update>
+    <!-- List<ProductTopVO> selectTop();-->
+    <select id="selectTop" resultMap="ProductTopRM">
+        SELECT id,title,sale_count
+        FROM cs.product
+        ORDER BY sale_count DESC LIMIT 0,6
+    </select>
+    <!-- List<ProductIndexVO> selectIndex();-->
+    <select id="selectIndex" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+    </select>
+    <!--ProductDetailVO selectByIdDetail(int id);-->
+    <select id="selectByIdDetail" resultMap="selectByIdDetailRM">
+        SELECT id,title,url,price,old_price,view_count,sale_count,created
+        FROM cs.product
+        WHERE id=#{id}
+    </select>
+    <!--void updateViewCount(int id);-->
+    <update id="updateViewCount">
+        UPDATE cs.product
+        SET view_count=view_count+1
+        WHERE id=#{id}
+    </update>
+    <resultMap id="selectByIdDetailRM" type="cn.tedu.coolshark.pojo.vo.ProductDetailVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="old_price" property="oldPrice"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="sale_count" property="saleCount"/>
+        <result column="created" property="created"/>
+    </resultMap>
+    <resultMap id="selectIndexRM" type="cn.tedu.coolshark.pojo.vo.ProductIndexVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="sale_count" property="saleCount"/>
+    </resultMap>
+    <resultMap id="ProductTopRM" type="cn.tedu.coolshark.pojo.vo.ProductTopVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="sale_count" property="saleCount"/>
+    </resultMap>
     <resultMap id="ProductUpdateRM" type="cn.tedu.coolshark.pojo.vo.ProductUpdateVO">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
