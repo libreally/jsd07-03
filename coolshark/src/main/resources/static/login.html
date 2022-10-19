@@ -42,6 +42,9 @@
                 <el-input type="password" v-model="user.password" placeholder="请输入密码"></el-input>
             </el-form-item>
             <el-form-item>
+                <el-checkbox v-model="user.rem">记住用户名和密码</el-checkbox>
+            </el-form-item>
+            <el-form-item>
                 <el-button style="position: relative;right: 30px"
                         type="primary" @click="login()">登录</el-button>
             </el-form-item>
@@ -59,7 +62,8 @@
             return {
                 user:{
                     username:"",
-                    password:""
+                    password:"",
+                    rem:false
                 }
             }
         },
@@ -76,6 +80,19 @@
                     }
                 })
             }
+       },
+       created:function (){
+           let arr=document.cookie.split(";");
+           for (let cookie of arr){
+               let cookieArr=cookie.split("=");
+               let name=cookieArr[0].trim();
+               let value=cookieArr[1];
+               if (name==="username"){
+                   this.user.username=value;
+               }else if (name==="password"){
+                   this.user.password=value;
+               }
+           }
        }
     })
 </script>

@@ -3,13 +3,15 @@ package cn.tedu.coolshark.pojo.dto;
 public class UserDTO {
     private String username;
     private String password;
+    private Boolean rem;
 
     public UserDTO() {
     }
 
-    public UserDTO(String username, String password) {
+    public UserDTO(String username, String password,Boolean rem) {
         this.username = username;
         this.password = password;
+        this.rem=rem;
     }
 
     @Override
@@ -17,7 +19,16 @@ public class UserDTO {
         return "UserDTO{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", rem=" + rem +
                 '}';
+    }
+
+    public Boolean getRem() {
+        return rem;
+    }
+
+    public void setRem(Boolean rem) {
+        this.rem = rem;
     }
 
     public String getUsername() {

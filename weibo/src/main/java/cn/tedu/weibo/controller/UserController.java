@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -27,12 +29,24 @@ public class UserController {
         return 1;
     }
     @RequestMapping("/login")
-    public int login(@RequestBody UserLoginDTO user , HttpSession session){
+    public int login(@RequestBody UserLoginDTO user , HttpSession session, HttpServletResponse response){
         System.out.println("userLoginDTO = " + user);
         UserVO u = userMapper.selectByUsername(user.getUsername());
         if (u!=null){
             if (user.getPassword().equals(u.getPassword())){
                 session.setAttribute("user",u);
+                //是否记住用户命名和密码
+                if (user.getRem()){
+                    //创建Cookie
+                    Cookie c1 = new Cookie("username", user.getUsername());
+                    //设置保存时常
+                    c1.setMaxAge(60*60*24*30);
+                    Cookie c2 = new Cookie("password", user.getPassword());
+                    c2.setMaxAge(60*60*24*30);
+                    //将cookie下发给客户端
+                    response.addCookie(c1);
+                    response.addCookie(c2);
+                }
                 return 1;
             }
             return 3;
