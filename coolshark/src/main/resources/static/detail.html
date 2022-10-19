@@ -5,7 +5,7 @@
     <!-- import CSS -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
     <style>
-        header a {
+        header a{
             text-decoration: none;
             color: #6c6c6c;
         }
@@ -18,16 +18,11 @@
         <el-header height="150px">
             <div style="width: 1200px;margin: 0 auto">
                 <img src="imgs/logo.png" style="width: 300px;vertical-align: middle" alt="">
-                <a href="">首页</a>
-                <el-divider direction="vertical"></el-divider>
-                <a href="">热点资讯</a>
-                <el-divider direction="vertical"></el-divider>
-                <a href="">商家入驻</a>
-                <el-divider direction="vertical"></el-divider>
-                <a href="">社会招聘</a>
-                <el-divider direction="vertical"></el-divider>
-                <a href="">校园招聘</a>
-                <el-divider direction="vertical"></el-divider>
+                <a href="/">首页</a><el-divider direction="vertical"></el-divider>
+                <a href="">热点资讯</a><el-divider direction="vertical"></el-divider>
+                <a href="">商家入驻</a><el-divider direction="vertical"></el-divider>
+                <a href="">社会招聘</a><el-divider direction="vertical"></el-divider>
+                <a href="">校园招聘</a><el-divider direction="vertical"></el-divider>
                 <a href="">帮助</a>
             </div>
             <!--导航菜单开始-->
@@ -41,6 +36,7 @@
                          text-color="#fff"
                          active-text-color="#fff">
                     <el-menu-item v-for="c in categoryArr" :index="c.id">{{c.name}}</el-menu-item>
+
                     <div style="float: right;position: relative;top: 10px">
                         <el-input placeholder="请输入搜索内容" v-model="wd">
                             <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
@@ -49,6 +45,7 @@
                 </el-menu>
             </div>
             <!--导航菜单结束-->
+
         </el-header>
         <el-main style="width: 1200px;margin: 0 auto">
             <el-row gutter="20">
@@ -59,10 +56,13 @@
                 </el-col>
                 <el-col span="12">
                     <p style="font-size: 25px">{{p.title}}</p>
-                    <span style="color:#666666;font-size: 12px">发布时间：{{p.created}}</span>
+                    <span style="color: #666;font-size: 12px">
+                        发布于:{{p.created}}</span>
                     <el-divider></el-divider>
-                    <p style="font-size: 15px;color: #666">销量:{{p.saleCount}} 浏览量:{{p.viewCount}}</p>
-                    <p style="font-size: 25px;font-weight: bold">{{p.price}}
+                    <p style="font-size: 15px;color: #666">
+                        销量:{{p.saleCount}} 浏览量:{{p.viewCount}}</p>
+                    <p style="font-size: 25px;font-weight: bold">
+                        ￥{{p.price}}
                         <span style="font-size: 15px;color: #666">原价:<s>{{p.oldPrice}}</s></span>
                     </p>
                     <el-row gutter="20" style="text-align: center">
@@ -102,6 +102,7 @@
 </div>
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
 <!-- import Vue before Element -->
 <script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
 <!-- import JavaScript -->
@@ -109,27 +110,32 @@
 <script>
     let v = new Vue({
         el: '#app',
-        data: function () {
+        data: function() {
             return {
-                activeIndex: "1",
-                wd: "",
-                categoryArr: [],
+                activeIndex:"",
+                wd:"",
+                categoryArr:[],
                 p:{}
             }
         },
         methods: {
-            handleSelect(key, keyPath) {
-                console.log(key, keyPath);
+            handleSelect(key,keyPath){
+                console.log(key,keyPath);
+                location.href="/result.html?id="+key;
+            },
+            search(){
+                location.href="/result.html?id="+v.wd;
             }
         },
-        created: function () {
+        created:function () {
             axios.get("/category/select").then(function (response) {
                 v.categoryArr = response.data;
             })
-            //通过id查询商品
-            axios.get("/product/selectById/detail"+location.search).then(function (response) {
-                v.p = response.data;
-            })
+            //发请求通过id获取商品详情
+            axios.get("/product/selectById/detail"+location.search)
+                .then(function (response) {
+                    v.p = response.data;
+                })
         }
     })
 </script>

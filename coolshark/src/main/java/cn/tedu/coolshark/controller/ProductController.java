@@ -7,6 +7,7 @@ import cn.tedu.coolshark.pojo.entity.Product;
 import cn.tedu.coolshark.pojo.vo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,8 @@ import java.util.List;
 
 @RestController
 public class ProductController {
+    @Value("${dirPath}")
+    private String dirPath;
     @Autowired(required = false)
     ProductMapper mapper;
 
@@ -38,7 +41,7 @@ public class ProductController {
     public void delete(int id){
         //删文件
         String url=mapper.selectUrlById(id);
-        new File("d:/files"+url).delete();
+        new File(dirPath+url).delete();
         //删DB数据
         mapper.deleteById(id);
     }
@@ -67,7 +70,14 @@ public class ProductController {
             mapper.updateViewCount(id);
             session.setAttribute("view"+id,"isVisited");
         }
-
         return mapper.selectByIdDetail(id);
+    }
+    @RequestMapping("/product/selectByCid")
+    public List<ProductIndexVO> selectByCid(int id){
+        return mapper.selectByCid(id);
+    }
+    @RequestMapping("/product/selectByWd")
+    public List<ProductIndexVO>selectByWd(String wd){
+        return mapper.selectByWd(wd);
     }
 }

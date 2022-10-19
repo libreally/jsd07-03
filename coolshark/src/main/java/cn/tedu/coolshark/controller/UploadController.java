@@ -1,5 +1,6 @@
 package cn.tedu.coolshark.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,8 @@ import java.util.UUID;
  */
 @RestController
 public class UploadController {
+    @Value("${dirPath}")
+    private String dirPath;
     @RequestMapping("/upload")
     public String upload(MultipartFile pic) throws IOException {
         //pic为客户端name中的文件
@@ -26,7 +29,6 @@ public class UploadController {
         filename = UUID.randomUUID() + suffix;
         System.out.println("唯一文件名 = " + filename);
         //设置保存图片路径
-        String dirPath="d:/files";
         File dirFile = new File(dirPath);
         if (!dirFile.exists()){
             dirFile.mkdirs();
@@ -42,6 +44,6 @@ public class UploadController {
     @RequestMapping("/remove")
     public void remove(String url){
         //删除磁盘上的文件
-        new File("d:/files"+url).delete();
+        new File(dirPath+url).delete();
     }
 }

@@ -62,6 +62,18 @@
         SET view_count=view_count+1
         WHERE id=#{id}
     </update>
+    <!--  List<ProductIndexVO> selectByCid(int id);-->
+    <select id="selectByCid" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+        WHERE category_id=#{id}
+    </select>
+    <!--List<ProductIndexVO> selectByWd(String wd);-->
+    <select id="selectByWd" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+        WHERE title LIKE '%${wd}%'
+    </select>
     <resultMap id="selectByIdDetailRM" type="cn.tedu.coolshark.pojo.vo.ProductDetailVO">
         <id column="id" property="id"/>
         <result column="title" property="title"/>

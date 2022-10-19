@@ -26,4 +26,8 @@ public interface ProductMapper {
     ProductDetailVO selectByIdDetail(int id);
 
     void updateViewCount(int id);
+
+    List<ProductIndexVO> selectByCid(int id);
+
+    List<ProductIndexVO> selectByWd(String wd);
 }

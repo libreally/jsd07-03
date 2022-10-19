@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <!-- import CSS -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/element-ui/2.15.9/theme-chalk/index.css">
+    <title></title>
     <style>
-        header a{
+        header a {
             text-decoration: none;
             color: #6c6c6c;
         }
-        .el-table .el-table__cell{
+
+        .el-table .el-table__cell {
             padding: 0;
         }
-        .el-table .cell{
-            white-space: nowrap;/*设置内容不换行*/
-            text-overflow: ellipsis;/*有超出显示范围的文本时显示...*/
+
+        .el-table .cell {
+            white-space: nowrap; /*设置内容不换行*/
+            text-overflow: ellipsis; /*有超出显示范围的文本时显示...*/
         }
-        .p_img:hover{
+
+        .p_img:hover {
             position: relative;
             top: 5px;
             /*设置元素阴影:x偏移值 y偏移值 浓度(值越大越模糊) 范围 颜色*/
@@ -31,11 +35,16 @@
         <el-header height="150px">
             <div style="width: 1200px;margin: 0 auto">
                 <img src="imgs/logo.png" style="width: 300px;vertical-align: middle" alt="">
-                <a href="">首页</a><el-divider direction="vertical"></el-divider>
-                <a href="">热点资讯</a><el-divider direction="vertical"></el-divider>
-                <a href="">商家入驻</a><el-divider direction="vertical"></el-divider>
-                <a href="">社会招聘</a><el-divider direction="vertical"></el-divider>
-                <a href="">校园招聘</a><el-divider direction="vertical"></el-divider>
+                <a href="/">首页</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">热点资讯</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">商家入驻</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">社会招聘</a>
+                <el-divider direction="vertical"></el-divider>
+                <a href="">校园招聘</a>
+                <el-divider direction="vertical"></el-divider>
                 <a href="">帮助</a>
             </div>
             <!--导航菜单开始-->
@@ -48,7 +57,7 @@
                          background-color="#82c8ec"
                          text-color="#fff"
                          active-text-color="#fff">
-                    <el-menu-item v-for="c in categoryArr"  :index="c.id">{{c.name}}</el-menu-item>
+                    <el-menu-item v-for="c in categoryArr" :index="c.id">{{c.name}}</el-menu-item>
 
                     <div style="float: right;position: relative;top: 10px">
                         <el-input placeholder="请输入搜索内容" v-model="wd">
@@ -61,37 +70,7 @@
 
         </el-header>
         <el-main style="width: 1200px;margin: 0 auto">
-            <el-row gutter="20">
-                <el-col span="18">
-                    <!--轮播图开始-->
-                    <el-carousel height="300px">
-                        <el-carousel-item v-for="b in bannerArr">
-                            <img :src="b.url" width="100%" height="100%" alt="">
-                        </el-carousel-item>
 
-                    </el-carousel>
-                    <!--轮播图结束-->
-                </el-col>
-                <el-col span="6">
-                    <el-card>
-                        <h3>
-                            <i style="font-weight: bold"
-                               class="el-icon-trophy">销量最高</i>
-                        </h3>
-                        <el-divider></el-divider>
-                        <el-table
-                                :data="topArr"
-                                style="width: 100%">
-                            <el-table-column type="index" label="排名">
-                            </el-table-column>
-                            <el-table-column prop="title" label="商品标题" width="100">
-                            </el-table-column>
-                            <el-table-column prop="saleCount" label="销量">
-                            </el-table-column>
-                        </el-table>
-                    </el-card>
-                </el-col>
-            </el-row>
             <!--商品列表开始-->
             <el-row gutter="20">
                 <el-col style="margin: 10px 0" span="6" v-for="p in productArr">
@@ -137,43 +116,49 @@
 <script>
     let v = new Vue({
         el: '#app',
-        data: function() {
+        data: function () {
             return {
-                bannerArr: [],
                 categoryArr: [],
-                activeIndex:"",
-                wd:"",
-                topArr:[],
-                productArr:[]
+                activeIndex: "1",
+                wd: "",
+                productArr: []
             }
         },
         methods: {
-            handleSelect(key,keyPath){
-                console.log(key,keyPath);
-                //跳转到结果页面 把分类id传递过去
-                location.href="/result.html?id="+key;
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+                axios.get("/product/selectByCid?id=" + key)
+                    .then(function (response) {
+                        v.productArr = response.data;
+                    })
             },
-            search(){
-                //跳转到结果页面把搜索内容传递过去
-                location.href="/result.html?wd="+v.wd;
+            search() {
+                axios.get("/product/selectByWd?wd=" + v.wd).then(function (response) {
+                    v.productArr = response.data;
+                })
             }
         },
-        created:function () {
+        created: function () {
             axios.get("/category/select").then(function (response) {
                 v.categoryArr = response.data;
             })
-            //发请求获取所有轮播图信息
-            axios.get("/banner/select").then(function (response) {
-                v.bannerArr = response.data;
-            })
-            //发请求获取排行榜数据
-            axios.get("/product/select/top").then(function (response) {
-                v.topArr = response.data;
-            })
-            //发请求获取所有商品信息
-            axios.get("/product/select/index").then(function (response) {
-                v.productArr = response.data;
-            })
+            //判断地址栏是否包含wd
+            if (location.search.indexOf("wd") !== -1) {
+                //根据地址栏中的内容获取所有相关商品信息
+                axios.get("/product/selectByWd" + location.search).then(function (response) {
+                    v.productArr = response.data;
+                })
+            } else {//显示分类
+                //根据地址栏中分类id查询对应的商品信息
+                axios.get("/product/selectByCid" + location.search)
+                    .then(function (response) {
+                        v.productArr = response.data;
+                    })
+                //?id=3
+                this.activeIndex = location.search.split('=')[1];
+            }
+
+
         }
     })
 </script>
