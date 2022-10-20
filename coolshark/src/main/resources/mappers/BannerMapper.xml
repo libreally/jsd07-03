@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.coolshark.mapper.BannerMapper">
+  <!-- List<Category> select();-->
+   <select id="select" resultType="cn.tedu.coolshark.pojo.entity.Banner">
+       SELECT id,url FROM cs.banner
+   </select>
+    <!-- void deleteById(int id);-->
+    <delete id="deleteById">
+        DELETE FROM cs.banner
+        WHERE id=#{id}
+    </delete>
+    <!--void insert(String url);-->
+    <insert id="insert">
+        INSERT INTO cs.banner
+        VALUES (NULL,#{url})
+    </insert>
+    <!--void update(Banner banner);-->
+    <update id="update">
+        UPDATE cs.banner
+        SET url=#{url}
+        WHERE id=#{id}
+    </update>
+    <!--String selectUrlById(int id);-->
+    <select id="selectUrlById" resultType="String">
+        SELECT url FROM cs.banner WHERE id=#{id}
+    </select>
+</mapper>

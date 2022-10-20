@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sql语句-->
+<mapper namespace="cn.tedu.boot10.mapper.PlayerMapper">
+    <select id="selectById" resultMap="playerRM">
+        SELECT p.id pid,p.name pname,t.id tid,t.name tname,loc
+        FROM player p join team t
+                           ON p.team_id=t.id
+        WHERE p.id=#{id}
+    </select>
+    <resultMap id="playerRM" type="cn.tedu.boot10.pojo.vo.PlayerVO">
+        <id column="pid" property="id"/>
+        <result column="pname" property="name"/>
+        <!--关联一个类型时用此标签 一对多-->
+        <association property="team" javaType="cn.tedu.boot10.pojo.entity.Team">
+            <id column="tid" property="id"/>
+            <result column="tname" property="name"/>
+            <result column="loc" property="loc"/>
+        </association>
+    </resultMap>
+</mapper>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步注册</title>
+</head>
+<body>
+<div>
+   <h1>注册页面</h1>
+    <input type="text" v-model="user.username" placeholder="用户名" @blur="f()">{{info}}<br>
+    <input type="password" v-model="user.password" placeholder="密码"><br>
+    <input type="text" v-model="user.nickname" placeholder="昵称"><br>
+    <input type="text" v-model="user.age" placeholder="年龄"><br>
+    <input type="submit" value="注册" @click="reg()">
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<!-- import Vue before Element -->
+<script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: function () {
+            return {
+                user:{
+                    username:"",
+                    password:"",
+                    nickname:"",
+                    age:""
+                },
+                info:""
+            }
+        },
+        methods: {
+            reg(){
+            },
+            f(){
+                axios.get("/check?username="+v.user.username).then(function (response) {
+                    v.info=response.data;
+                })
+                console.log("用户名"+v.user.username);
+            }
+        }
+    })
+</script>
+</body>
+</html>

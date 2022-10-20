@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>身体质量测试</h1>
+<div >
+  <input type="text"  placeholder="身高(m)" v-model="h">
+  <input type="text"  placeholder="体重(kg)" v-model="w">
+  <input type="submit" value="开始测试" @click="f1()">
+    <h2>结果:{{info}}</h2>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- import Vue before Element -->
+    <script src="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://cdn.staticfile.org/element-ui/2.15.9/index.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: function () {
+            return {
+                h:"",
+                w:"",
+                info:""
+            }
+        },
+        methods: {
+            f1(){
+                //发出异步请求
+                axios.get("/bmi?h="+v.h+"&w="+v.w).then(function (response){
+                    //response代表响应数据
+                    v.info=response.data;
+                })
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

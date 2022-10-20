@@ -1,11 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--写sql语句-->
-<mapper namespace="cn.detu.boot08.mapper.ProductMapper">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sql语句-->
+<mapper namespace="cn.tedu.boot08.mapper.ProductMapper">
     <insert id="insert">
-        INSERT INTO product VALUES (NULL,#{title},#{price},#{num})
+        INSERT INTO product
+        VALUES (NULL, #{title}, #{price}, #{num});
     </insert>
+    <select id="deleteById">
+        DELETE
+        FROM product
+        WHERE id = #{id};
+    </select>
+    <update id="update">
+        UPDATE product
+        SET title=#{title},
+            price=#{price},
+            num=#{num}
+        WHERE id = #{id};
+    </update>
+    <select id="select" resultType="cn.tedu.boot08.entity.Product">
+        SELECT id, title, price, num
+        FROM product;
+    </select>
+    <select id="selectById" resultType="cn.tedu.boot08.entity.Product">
+        SELECT id, title, price, num
+        FROM product
+        WHERE id = #{id};
+    </select>
 
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM product;
+    </select>
+    <!--批量删除
+    如果是list集合写list否则写array  collection="list"
+    遍历的集合中的变量 item="id"  分隔符 separator="," -->
+    <delete id="deleteByIds1">
+        DELETE FROM product
+        WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <delete id="deleteByIds2">
+        DELETE FROM product
+        WHERE id IN(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <delete id="deleteByIds3">
+        DELETE FROM product
+        WHERE id IN(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+    <!--批量插入-->
+    <insert id="insertProducts">
+        INSERT INTO product
+        VALUES
+        <foreach collection="list" item="p" separator=",">
+            (null,#{p.title},#{p.price},#{p.num})
+        </foreach>
+    </insert>
+    <!--动态插入数据-->
+    <insert id="dynamicInsert">
+        INSERT INTO product
+        <trim prefix="(" suffix="" suffixOverrides=",">
+            <if test="title!=null">title,</if>
+            <if test="price!=null">price,</if>
+            <if test="num!=null">num</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix="" suffixOverrides=",">
+            <if test="title!=null">#{title},</if>
+            <if test="price!=null">#{price},</if>
+            <if test="num!=null">#{num}</if>
+        </trim>
+    </insert>
+    <!--动态修改数据-->
+    <update id="dynamicUpdate">
+        UPDATE product
+        <set>
+            <if test="title!=null">#{title},</if>
+            <if test="price!=null">#{price},</if>
+            <if test="num!=null">#{num}</if>
+        </set>
+        WHERE id=#{id};
+    </update>
 </mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sql语句-->
+<mapper namespace="cn.tedu.boot09.mapper.EmpMapper">
+    <!--映射 type装载的是实例化对象路径
+     column表字段名称
+     property实体类属性名
+     <id>标签是主键的映射
+     <result>标签是普通字段映射
+     <association>多对一关系
+     <collection>多对多关系
+    -->
+    <resultMap id="empRM" type="cn.tedu.boot09.entity.Emp">
+        <result property="managerId" column="manager_id"/>
+    </resultMap>
+    <!--复用代码块-->
+    <sql id="query">
+        SELECT id, name, salary, job, manager_id
+        FROM emp
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO emp VALUES (NULL,#{name},#{salary},#{job},#{managerId} )
+    </insert>
+
+    <insert id="insertEmps">
+        INSERT INTO emp
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (NULL,#{e.name},#{e.salary},#{e.job},#{e.managerId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM emp WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM emp
+        WHERE id IN(
+        <foreach collection="list" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+    <update id="dynamicUpdate">
+        UPDATE emp
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="salary!=null">salary=#{salary},</if>
+            <if test="job!=null">job=#{job},</if>
+            <if test="managerId!=null">manager_id=#{managerId}</if>
+        </set>
+    </update>
+    <select id="select" resultMap="empRM">
+        <include refid="query"/>
+    </select>
+    <select id="selectById" resultMap="empRM">
+        <include refid="query"/> WHERE id=#{id}
+    </select>
+    <select id="count" resultType="int">
+        SELECT count(*) FROM emp;
+    </select>
+</mapper>

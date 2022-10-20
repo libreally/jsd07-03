@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>微博详情页面</h1>
+<div>
+    <h2>
+        {{weibo.nickname}}说:{{weibo.content}}
+    </h2>
+    <img :src="weibo.url" width="200" alt="">
+    <hr>
+    <div v-for="comment in arr">
+        {{comment.content}}
+    </div>
+    <h1>评论相关</h1>
+    <input type="text" placeholder="评论内容..." v-model="comment.content">
+    <input type="button" value="发表评论" @click="send()">
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+<script>
+    let v = new Vue({
+        el: "body>div",
+        data: {
+            weibo: {},
+            comment:{
+                content:"",
+                weiboId:""
+            },
+            arr:[]
+        },
+        methods: {
+            send(){
+                axios.post("/comment/insert"+location.search,v.comment).then(function (response) {
+                    if (response.data===1){
+                        alert("评论完成!");
+                        location.reload();
+                    }else{
+                        alert("请先登录")
+                        location.href = "/login.html";
+                    }
+
+                })
+            }
+        },
+        created: function () {
+            //通过地址栏中的id发请求获取微博详情
+            axios.get("/weibo/selectById" + location.search).then(function (response) {
+                v.weibo = response.data;
+            })
+            axios.get("/comment/selectById"+location.search).then(function (response) {
+                v.arr = response.data;
+            })
+        }
+    })
+</script>
+</body>
+</html>

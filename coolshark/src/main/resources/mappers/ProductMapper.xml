@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.coolshark.mapper.ProductMapper">
+    <insert id="insert" >
+        INSERT INTO cs.product
+        VALUES (
+                   NULL ,#{title},#{url},#{price},#{oldPrice},
+                   #{saleCount},#{num},#{viewCount},#{created},
+                   #{categoryId}
+               )
+    </insert>
+    <!-- List<ProductAdminVO> select();-->
+    <select id="select" resultMap="ProductAdminRM">
+        SELECT id,title,url,price,old_price,sale_count
+        FROM cs.product
+    </select>
+    <!--void deleteById(int id);-->
+    <delete id="deleteById">
+        DELETE FROM cs.product
+        WHERE id=#{id}
+    </delete>
+    <!--String selectUrlById(int id);-->
+    <select id="selectUrlById" resultType="String">
+        SELECT url FROM cs.product WHERE id=#{id}
+    </select>
+    <!--void selectByIdUpdate;-->
+    <select id="selectByIdUpdate" resultMap="ProductUpdateRM">
+        SELECT id,title,url,price,old_price,
+               sale_count,num,category_id
+        FROM cs.product
+        WHERE id=#{id}
+    </select>
+    <!-- void update(Product p);-->
+    <update id="update">
+        UPDATE cs.product
+        SET title=#{title},price=#{price},url=#{url},old_price=#{oldPrice},
+            sale_count=#{saleCount},num=#{num},category_id=#{categoryId}
+        WHERE id=#{id}
+    </update>
+    <!-- List<ProductTopVO> selectTop();-->
+    <select id="selectTop" resultMap="ProductTopRM">
+        SELECT id,title,sale_count
+        FROM cs.product
+        ORDER BY sale_count DESC LIMIT 0,6
+    </select>
+    <!-- List<ProductIndexVO> selectIndex();-->
+    <select id="selectIndex" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+    </select>
+    <!--ProductDetailVO selectByIdDetail(int id);-->
+    <select id="selectByIdDetail" resultMap="selectByIdDetailRM">
+        SELECT id,title,url,price,old_price,view_count,sale_count,created
+        FROM cs.product
+        WHERE id=#{id}
+    </select>
+    <!--void updateViewCount(int id);-->
+    <update id="updateViewCount">
+        UPDATE cs.product
+        SET view_count=view_count+1
+        WHERE id=#{id}
+    </update>
+    <!--  List<ProductIndexVO> selectByCid(int id);-->
+    <select id="selectByCid" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+        WHERE category_id=#{id}
+    </select>
+    <!--List<ProductIndexVO> selectByWd(String wd);-->
+    <select id="selectByWd" resultMap="selectIndexRM">
+        SELECT id,title,url,price,view_count,sale_count
+        FROM cs.product
+        WHERE title LIKE '%${wd}%'
+    </select>
+    <resultMap id="selectByIdDetailRM" type="cn.tedu.coolshark.pojo.vo.ProductDetailVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="old_price" property="oldPrice"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="sale_count" property="saleCount"/>
+        <result column="created" property="created"/>
+    </resultMap>
+    <resultMap id="selectIndexRM" type="cn.tedu.coolshark.pojo.vo.ProductIndexVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="sale_count" property="saleCount"/>
+    </resultMap>
+    <resultMap id="ProductTopRM" type="cn.tedu.coolshark.pojo.vo.ProductTopVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="sale_count" property="saleCount"/>
+    </resultMap>
+    <resultMap id="ProductUpdateRM" type="cn.tedu.coolshark.pojo.vo.ProductUpdateVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="old_price" property="oldPrice"/>
+        <result column="sale_count" property="saleCount"/>
+        <result column="num" property="num"/>
+        <result column="category_id" property="categoryId"/>
+    </resultMap>
+    <resultMap id="ProductAdminRM" type="cn.tedu.coolshark.pojo.vo.ProductAdminVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="url" property="url"/>
+        <result column="price" property="price"/>
+        <result column="old_price" property="oldPrice"/>
+        <result column="sale_count" property="saleCount"/>
+    </resultMap>
+</mapper>

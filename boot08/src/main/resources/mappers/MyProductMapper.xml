@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sql语句-->
+<mapper namespace="cn.tedu.boot08.mapper.MyProductMapper">
+    <!--结果映射
+    匹配entity的属性名与表字段名不同-->
+    <resultMap id="productRM" type="cn.tedu.boot08.entity.MyProduct">
+        <result column="sale_count" property="saleCount"/>
+        <result column="view_count" property="viewCount"/>
+    </resultMap>
+    <!--定义复用语句内容-->
+    <sql id="query">
+        SELECT id,title,sale_count,view_count FROM my_product
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO my_product
+        VALUES (NULL, #{title}, #{saleCount}, #{viewCount})
+    </insert>
+    <!--  SELECT id,title,sale_count,view_count FROM my_product WHERE id=#{id}-->
+    <select id="selectById" resultMap="productRM">
+        <include refid="query"/> WHERE id=#{id}
+    </select>
+
+<!--SELECT id,title,sale_count,view_count FROM my_product-->
+    <select id="select" resultMap="productRM">
+        <include refid="query"/>
+    </select>
+
+
+</mapper>
