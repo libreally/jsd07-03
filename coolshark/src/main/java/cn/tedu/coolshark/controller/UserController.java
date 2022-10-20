@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
@@ -17,7 +18,7 @@ public class UserController {
     UserMapper mapper;
 
     @RequestMapping("/login")
-    public int login(@RequestBody UserDTO user, HttpServletResponse response){
+    public int login(@RequestBody UserDTO user, HttpServletResponse response, HttpSession session){
         System.out.println("user = " + user);
         UserVO u = mapper.selectByUsername(user.getUsername());
         if (u!=null){
@@ -30,10 +31,21 @@ public class UserController {
                     response.addCookie(c1);
                     response.addCookie(c2);
                 }
+                //把登录用户存储在Session里面
+                session.setAttribute("user",u);
+
                 return 1;
             }
             return 3;
         }
         return 2;
+    }
+    @RequestMapping("/currentUser")
+    public UserVO currentUser(HttpSession session){
+        return (UserVO) session.getAttribute("user");
+    }
+    @RequestMapping("/logout")
+    public void logout(HttpSession session){
+        session.removeAttribute("user");
     }
 }

@@ -74,23 +74,22 @@
                         location.href="/admin.html";
                     }else if (response.data===2){
                         v.$message.error("用户名不存在！");
-
                     }else {
                         v.$message.error("密码错误！");
                     }
                 })
             }
        },
-       created:function (){
-           let arr=document.cookie.split(";");
-           for (let cookie of arr){
-               let cookieArr=cookie.split("=");
-               let name=cookieArr[0].trim();
-               let value=cookieArr[1];
+       created:function () {
+           let arr = document.cookie.split(";");
+           for (let cookie of arr) {
+               let cookieArr = cookie.split("=");
+               let name = cookieArr[0].trim();
+               let value = cookieArr[1];
                if (name==="username"){
-                   this.user.username=value;
-               }else if (name==="password"){
-                   this.user.password=value;
+                   this.user.username = value;
+               }else if(name==="password"){
+                   this.user.password = value;
                }
            }
        }

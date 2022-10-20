@@ -12,8 +12,8 @@
         <el-header style="background-color: #0095d7">
             <h1 style="color: white;font-size: 22px">
                 CoolShark商城后台管理系统
-                <span style="float: right;font-size: 15px">欢迎XXX回来
-                    <a href="">退出登录</a>
+                <span v-if="user.nickname!=null" style="float: right;font-size: 15px">欢迎{{user.nickname}}回来
+                    <a href="javascript:void(0)" @click="logout()">退出登录</a>
                 </span>
             </h1>
         </el-header>
@@ -115,6 +115,7 @@
                         </template>
                     </el-table-column>
                 </el-table>
+
                 <el-table v-if="currentIndex==='3-1'"
                           :data="productArr"
                           style="width: 100%">
@@ -171,10 +172,18 @@
                 currentIndex: "1-1",
                 categoryArr: [],
                 bannerArr: [],
-                productArr: []
+                productArr: [],
+                user:{}
             }
         },
         methods: {
+            logout(){
+                if(confirm("确认退出吗?")){
+                    axios.get("/logout").then(function () {
+                        location.href="/";
+                    })
+                }
+            },
             productUpdate(product){
                 location.href="/updateProduct.html?id="+product.id;
             },
@@ -256,6 +265,14 @@
             })
             axios.get("/product/select/admin").then(function (response) {
                 v.productArr=response.data;
+            })
+            //发请求获取当前登录的用户对象
+            axios.get("/currentUser").then(function (response) {
+                v.user=response.data;
+                if (v.user===""){
+                    alert("请先登录");
+                    location.href="/login.html";
+                }
             })
         }
     })
